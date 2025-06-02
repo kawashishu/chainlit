@@ -33,6 +33,7 @@ export interface IStep {
   streaming?: boolean;
   steps?: IStep[];
   metadata?: Record<string, any>;
+  elementsPosition?: 'above' | 'below';
   //legacy
   indent?: number;
 }

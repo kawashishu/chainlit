@@ -3,10 +3,7 @@ import json
 import time
 import uuid
 from abc import ABC
-from typing import Dict, List, Optional, Union, cast
-
-from literalai.helper import utc_now
-from literalai.observability.step import MessageStepType
+from typing import Dict, List, Literal, Optional, Union, cast
 
 from chainlit.action import Action
 from chainlit.chat_context import chat_context
@@ -17,14 +14,10 @@ from chainlit.element import ElementBased
 from chainlit.logger import logger
 from chainlit.step import StepDict
 from chainlit.telemetry import trace_event
-from chainlit.types import (
-    AskActionResponse,
-    AskActionSpec,
-    AskFileResponse,
-    AskFileSpec,
-    AskSpec,
-    FileDict,
-)
+from chainlit.types import (AskActionResponse, AskActionSpec, AskFileResponse,
+                            AskFileSpec, AskSpec, FileDict)
+from literalai.helper import utc_now
+from literalai.observability.step import MessageStepType
 
 
 class MessageBase(ABC):
@@ -70,6 +63,7 @@ class MessageBase(ABC):
             type=type,  # type: ignore
             language=_dict.get("language"),
             metadata=_dict.get("metadata", {}),
+            elements_position=_dict.get("elementsPosition", "below"),
         )
 
     def to_dict(self) -> StepDict:
@@ -90,6 +84,7 @@ class MessageBase(ABC):
             "waitForAnswer": self.wait_for_answer,
             "metadata": self.metadata or {},
             "tags": self.tags,
+            "elementsPosition": self.elements_position,
         }
 
         return _dict
@@ -217,6 +212,7 @@ class Message(MessageBase):
         language: Optional[str] = None,
         actions: Optional[List[Action]] = None,
         elements: Optional[List[ElementBased]] = None,
+        elements_position: Literal["above", "below"] = "below",
         type: MessageStepType = "assistant_message",
         metadata: Optional[Dict] = None,
         tags: Optional[List[str]] = None,
@@ -259,6 +255,7 @@ class Message(MessageBase):
         self.type = type
         self.actions = actions if actions is not None else []
         self.elements = elements if elements is not None else []
+        self.elements_position = elements_position
 
         super().__post_init__()
 

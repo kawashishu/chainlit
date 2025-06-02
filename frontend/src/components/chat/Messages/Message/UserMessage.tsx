@@ -58,7 +58,9 @@ export default function UserMessage({
 
   return (
     <div className="flex flex-col w-full gap-1">
-      <InlinedElements elements={inlineElements} className="items-end" />
+      {message.elementsPosition === 'above' ? (
+        <InlinedElements elements={inlineElements} className="items-end" />
+      ) : null}
 
       <div className="flex flex-row items-center gap-1 w-full group">
         {!isEditing && editable && (
@@ -118,6 +120,9 @@ export default function UserMessage({
           )}
         </div>
       </div>
+      {message.elementsPosition !== 'above' ? (
+        <InlinedElements elements={inlineElements} className="items-end" />
+      ) : null}
     </div>
   );
 }
