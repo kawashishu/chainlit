@@ -86,6 +86,9 @@ async def main(message: cl.Message):
     await cl.Message(content=tool_res).send()
 ```
 
+You can display inline elements before the message content by passing
+`elements_position="above"` when creating the `cl.Message` instance.
+
 Now run it!
 
 ```sh

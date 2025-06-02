@@ -92,10 +92,17 @@ const MessageContent = memo(
       </div>
     );
 
+    const elementsFirst = message.elementsPosition === 'above';
+
     return (
       <div className="message-content w-full flex flex-col gap-2">
+        {elementsFirst ? (
+          <InlinedElements elements={outputInlinedElements} />
+        ) : null}
         {!!inputMarkdown || output ? markdownContent : null}
-        <InlinedElements elements={outputInlinedElements} />
+        {!elementsFirst ? (
+          <InlinedElements elements={outputInlinedElements} />
+        ) : null}
       </div>
     );
   }
