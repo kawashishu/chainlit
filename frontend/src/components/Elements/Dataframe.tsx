@@ -38,7 +38,7 @@ interface DataframeData {
   data: (string | number)[][];
 }
 
-const _DataframeElement = ({ data }: { data: DataframeData }) => {
+const _DataframeElement = ({ data, pageSize }: { data: DataframeData; pageSize?: number }) => {
   const { index, columns, data: rowData } = data;
 
   const tableColumns: ColumnDef<Record<string, string | number>>[] = useMemo(
@@ -81,7 +81,7 @@ const _DataframeElement = ({ data }: { data: DataframeData }) => {
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     initialState: {
-      pagination: { pageSize: 10 }
+      pagination: { pageSize: pageSize || 10 }
     }
   });
 
@@ -193,7 +193,7 @@ function DataframeElement({ element }: { element: IDataframeElement }) {
     return <Alert variant="error">{error.message}</Alert>;
   }
 
-  return <_DataframeElement data={jsonData} />;
+  return <_DataframeElement data={jsonData} pageSize={element.pageSize} />;
 }
 
 export default DataframeElement;
