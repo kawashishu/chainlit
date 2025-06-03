@@ -74,7 +74,9 @@ export type IPlotlyElement = TMessageElement<'plotly'>;
 
 export type ITasklistElement = TElement<'tasklist'>;
 
-export type IDataframeElement = TMessageElement<'dataframe'>;
+export interface IDataframeElement extends TMessageElement<'dataframe'> {
+  pageSize?: number;
+}
 
 export interface ICustomElement extends TMessageElement<'custom'> {
   props: Record<string, unknown>;

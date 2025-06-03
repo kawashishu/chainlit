@@ -60,6 +60,7 @@ class ElementDict(TypedDict, total=False):
     size: Optional[ElementSize]
     language: Optional[str]
     page: Optional[int]
+    pageSize: Optional[int]
     props: Optional[Dict]
     autoPlay: Optional[bool]
     playerConfig: Optional[dict]
@@ -120,6 +121,7 @@ class Element:
                 "size": getattr(self, "size", None),
                 "props": getattr(self, "props", None),
                 "page": getattr(self, "page", None),
+                "pageSize": getattr(self, "page_size", None),
                 "autoPlay": getattr(self, "auto_play", None),
                 "playerConfig": getattr(self, "player_config", None),
                 "language": getattr(self, "language", None),
@@ -429,6 +431,7 @@ class Dataframe(Element):
     type: ClassVar[ElementType] = "dataframe"
     size: ElementSize = "large"
     data: Any = None  # The type is Any because it is checked in __post_init__.
+    page_size: Optional[int] = None
 
     def __post_init__(self) -> None:
         """Ensures the data is a pandas DataFrame and converts it to JSON."""

@@ -63,6 +63,6 @@ async def start():
 
     df = pd.DataFrame(data)
 
-    elements = [cl.Dataframe(data=df, display="inline", name="Dataframe")]
+    elements = [cl.Dataframe(data=df, display="inline", name="Dataframe", page_size=5)]
 
     await cl.Message(content="This message has a Dataframe", elements=elements).send()
